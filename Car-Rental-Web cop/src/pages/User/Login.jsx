@@ -32,10 +32,10 @@ const Login = () => {
     <div className="login-container">
       <div className="login-box">
         <div className="close-btn" onClick={() => window.history.back()}>×</div>
-        <h2>Đăng nhập</h2>
+        <h2>Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="input-group">
-            <label>Số điện thoại:</label>
+            <label>Phone Number:</label>
             <input
               type="text"
               placeholder="Số điện thoại"
@@ -45,7 +45,7 @@ const Login = () => {
             />
           </div>
           <div className="input-group">
-            <label>Mật khẩu:</label>
+            <label>Password:</label>
             <input
               type="password"
               placeholder="Mật khẩu"
@@ -56,7 +56,7 @@ const Login = () => {
             <div className="eye-icon">👁️</div> {}
           </div>
           <div className="forgot-password">
-            <a href="/forgot-password">Quên mật khẩu?</a>
+            <a href="/forgot-password">Forget Password?</a>
           </div>
           <button type="submit" className="login-btn" disabled={loading}>
             {loading ? "Đang đăng nhập..." : "Đăng nhập"}
@@ -64,7 +64,7 @@ const Login = () => {
         </form>
 
         <div className="sign-up">
-          Bạn chưa là thành viên? <a href="/register">Đăng ký ngay</a>
+          Bạn chưa là thành viên? <a href="/register">Register</a>
         </div>
 
         <div className="social-login">
