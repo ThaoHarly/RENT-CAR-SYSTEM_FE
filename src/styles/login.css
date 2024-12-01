@@ -1,0 +1,167 @@
+/* Login.css */
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+}
+
+.login-box:hover {
+    transform: translateY(-5px); /* Subtle lift effect on hover */
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #4facfe;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.forgot-password a {
+    color: #4facfe;
+    text-decoration: none;
+}
+
+/* Login button with smooth animation */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    background: #003366;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s ease-in-out;
+    margin-top: 10px;
+    will-change: transform; /* Optimizes animation */
+}
+
+.login-btn:hover {
+    background: #002244;
+    transform: scale(1.02); /* Slight scaling effect on hover */
+}
+
+.login-btn:focus {
+    background: #001122;
+}
+
+.login-btn:active {
+    transform: scale(0.98); /* Pressed button effect */
+}
+
+/* Social login buttons with smooth animations */
+.social-login {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.facebook-btn, .google-btn {
+    width: 48%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s ease-in-out;
+    will-change: transform;
+}
+
+.facebook-btn {
+    background: #3b5998;
+    color: white;
+}
+
+.google-btn {
+    background: white;
+    color: #4285f4;
+    border: 1px solid #ddd;
+}
+
+.facebook-btn:hover, .google-btn:hover {
+    transform: scale(1.02); /* Smooth scaling on hover */
+}
+
+.facebook-btn:active, .google-btn:active {
+    transform: scale(0.98); /* Pressed button effect */
+}
+
+.facebook-btn:focus, .google-btn:focus {
+    box-shadow: 0 0 0 2px rgba(72, 133, 244, 0.3); /* Light focus ring effect */
+}
+
+.sign-up {
+    margin-top: 15px;
+}
+
+.sign-up a {
+    color: #4facfe;
+    text-decoration: none;
+}
+
+.sign-up a:hover {
+    text-decoration: underline;
+}

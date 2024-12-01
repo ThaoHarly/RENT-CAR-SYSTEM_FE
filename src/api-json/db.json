@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "phone": "0901234567",
+      "password": "123",
+      "accessToken": "fake-jwt-token",
+      "name": "Tân Đẹp Chai",
+      "email": "DonalJTrump@gmai.com",
+      "avatar": "https://cdn.britannica.com/68/216668-050-DD3A9D0A/United-States-President-Donald-Trump-2017.jpg?w=400&h=300&c=crop"
+    },
+    {
+      "id": 2,
+      "phone": "0987654321",
+      "password": "456",
+      "accessToken": "fake-jwt-token-2",
+      "name": "Mr.Sunday",
+      "email": "Theweeknd@gmail.com",
+      "avatar":"https://a.pinatafarm.com/620x412/14a48464e4/donald-trump.jpg"
+    }
+  ]
+}
