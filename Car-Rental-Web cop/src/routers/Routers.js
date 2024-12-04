@@ -20,6 +20,12 @@ import UserAddresses from "../pages/User/UserAddresses";
 import Gifts from "../pages/User/Gifts";
 import ChangePassword from "../pages/User/ChangePassword";
 import DeleteAccount from "../pages/User/DeleteAccount";
+import DashboardCard from "../pages/DashboardCard/DashboardCard";
+import DashboardContent from "../pages/DashboardContent/DashboardContent";
+import EventCalendarContent from "../pages/EventCalendarContent/EventCalendarContent";
+import FinancialManagementContent from "../pages/FinancialManagementContent/FinancialManagementContent";
+import MaintenanceRequestContent from "../pages/MaintenanceRequestContent/MaintenanceRequestContent";
+import VehicleRentalHomepage from "../pages/VehicleHireService/VehicleRentalHomepage";
 
 const Routers = () => {
   return (
@@ -34,6 +40,8 @@ const Routers = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/dashboard" element={<DashboardCard/>}/>
+      <Route path="/dashboard2" element={<MaintenanceRequestContent/>}/>
       <Route path="*" element={<NotFound />} />
 
       {/* Nested routes inside Layout (user account section) */}
@@ -48,6 +56,8 @@ const Routers = () => {
         <Route path="change-password" element={<ChangePassword />} />
         <Route path="delete-account" element={<DeleteAccount />} />
       </Route>
+      
+      <Route path="/vehicle" element={<VehicleRentalHomepage />} />
     </Routes>
   );
 };
