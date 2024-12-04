@@ -26,7 +26,7 @@ import EventCalendarContent from "../pages/EventCalendarContent/EventCalendarCon
 import FinancialManagementContent from "../pages/FinancialManagementContent/FinancialManagementContent";
 import MaintenanceRequestContent from "../pages/MaintenanceRequestContent/MaintenanceRequestContent";
 import VehicleRentalHomepage from "../pages/VehicleHireService/VehicleRentalHomepage";
-
+import OwnerLogin from "../pages/User/OwnerLogin";
 const Routers = () => {
   return (
     <Routes>
@@ -40,6 +40,7 @@ const Routers = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/OwnerLogin" element={<OwnerLogin />} />
       <Route path="/dashboard" element={<DashboardCard/>}/>
       <Route path="/dashboard2" element={<MaintenanceRequestContent/>}/>
       <Route path="*" element={<NotFound />} />
