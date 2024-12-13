@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/login.css";
 import authService from "../../API/authService";
 
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +28,9 @@ const Login = () => {
         Email: email,
         Password: password,
       });
+      
+
+      
       console.log("Login successful:", data); // Log response
       navigate("/home");
     } catch (error) {
@@ -50,38 +54,56 @@ const Login = () => {
           ×
         </div>
         <h2>Login</h2>
+
         <form onSubmit={handleSubmit}>
           {errorMessage && <div className="error-message">{errorMessage}</div>}
-          <div className="input-group">
-            <label>Email:</label>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+
+
+
+          <div className="mb-3 d-flex align-items-center"> {/* Main container with flexbox */}
+            <label htmlFor="email" className="me-2" style={{ minWidth: "80px" }}>Email:</label> {/* Label with margin-right and minimum width */}
+            <div className="input-group"> {/* Nested input-group for styling */}
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="form-control" // Bootstrap form control styling
+              />
+            </div>
           </div>
-          <div className="input-group">
-            <label>Password:</label>
-            <div className="password-wrapper">
+
+          <div className="mb-3 d-flex align-items-center"> {/* Main container with flexbox */}
+            <label htmlFor="password" className="me-2" style={{ minWidth: "80px" }}>Password:</label> {/* Label with margin-right and minimum width */}
+            <div className="password-wrapper d-flex align-items-center w-100"> {/* Flexbox for password input and icon, full width */}
               <input
                 type={showPassword ? "text" : "password"}
+                id="password"
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="form-control" // Bootstrap form control styling
               />
-              <div
-                className="eye-icon"
+              <button
+                className="mx-2"
                 onClick={togglePasswordVisibility}
                 title={showPassword ? "Hide password" : "Show password"}
                 style={{ cursor: "pointer" }}
               >
                 {showPassword ? "🙈" : "👁️"}
-              </div>
+              </button>
             </div>
           </div>
+
+
+
+
+
+
+
           <div className="forgot-password">
             <a href="/forgot-password">Forgot password?</a>
           </div>

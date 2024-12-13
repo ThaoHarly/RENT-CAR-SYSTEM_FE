@@ -13,7 +13,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   (config) => {
     const token = authStore.getToken();
-    console.log("Token being sent in headers:", token); // Log để kiểm tra token
+    
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

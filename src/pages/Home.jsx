@@ -14,7 +14,12 @@ import Testimonial from "../components/UI/Testimonial";
 
 import BlogList from "../components/UI/BlogList";
 
+import authStore from "../API/authStore";
+
+
 const Home = () => {
+  const token = authStore.getToken();
+  console.log(token);
   return (
     <Helmet title="Home">
       {/* ============= hero section =========== */}

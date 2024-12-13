@@ -54,18 +54,9 @@ function ProfileInfoCard({ profile, user }) {
         </button>
       </div>
       <div className="flex items-center mt-4">
-        <div className="w-20 h-20 rounded-full bg-gray-300 overflow-hidden">
-          {/* Profile Image */}
-          <img
-            src={user.avatar}
-            alt="profile"
-            className="object-cover w-full h-full"
-          />
-        </div>
-        <div className="ml-4">
+        <div className="">
           {/* Conditionally rendering user.name with a fallback */}
           <h3 className="text-xl font-semibold">{user?.name || 'No Name'}</h3>
-          <p className="text-sm text-gray-500">Tham gia: 10/03/2020</p>
         </div>
         <div className="ml-auto flex items-center">
           <div className="text-center">

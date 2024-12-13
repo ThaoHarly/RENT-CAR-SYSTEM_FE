@@ -41,6 +41,7 @@ const Routers = () => {
       <Route path="*" element={<NotFound />} />
 
       {/* Nested routes inside Layout (user account section) */}
+
       <Route path="/user" element={<Layout />}>
         <Route index path="account" element={<Profile />} />
         <Route path="favorite-cars" element={<CarFavorite />} />

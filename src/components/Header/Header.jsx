@@ -3,6 +3,8 @@ import React, { useRef } from "react";
 import { Container, Row, Col } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
 import "../../styles/header.css";
+import authStore from "../../API/authStore";
+import Logout from "../../function/logout";
 
 const navLinks = [
   {
@@ -28,11 +30,15 @@ const navLinks = [
   },
 ];
 
+
 const Header = () => {
+  const token = authStore.getToken();
+
   const menuRef = useRef(null);
 
   const toggleMenu = () => menuRef.current.classList.toggle("menu__active");
 
+  console.log(token);
   return (
     <header className="header">
       {/* ============ header top ============ */}
@@ -50,20 +56,37 @@ const Header = () => {
 
             <Col lg="6" md="6" sm="6">
               <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
-                <Link to="/login" className=" d-flex align-items-center gap-1">
-                  <i class="ri-login-circle-line"></i> Login
-                </Link>
+                {!token &&
+                  ( // Chỉ hiển thị khi token không tồn tại
+                    <>
+                      <Link to="/login" className="d-flex align-items-center gap-1">
+                        <i className="ri-login-circle-line"></i> Login
+                      </Link>
+                      <Link
+                        to="/register"
+                        className=" d-flex align-items-center gap-1"
+                      >
+                        <i class="ri-user-line"></i> Register
+                      </Link>
+                    </>
+                  )
+                }
+                {token && (
+                  <>
+                    <Link to="/user" className=" d-flex align-items-center gap-1">
+                      <i class="ri-user-line"></i> Profile
+                    </Link>
 
-                <Link
-                  to="/register"
-                  className=" d-flex align-items-center gap-1"
-                >
-                  <i class="ri-user-line"></i> Register
-                </Link>
+                    <Link
+                      to="#"
+                      onClick={Logout}
+                      className="d-flex align-items-center gap-1"
+                    >
+                      <i className="ri-login-circle-line"></i> Logout
+                    </Link>
+                  </>
+                )}
 
-                <Link to="/user" className=" d-flex align-items-center gap-1">
-                  <i class="ri-user-line"></i> Profile
-                </Link>
               </div>
             </Col>
           </Row>

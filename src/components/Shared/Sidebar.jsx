@@ -6,7 +6,7 @@ import { AiOutlineUser, AiOutlineHeart, AiOutlineCar } from "react-icons/ai";
 import { BsBagCheck, BsGift, BsBoxArrowInRight } from "react-icons/bs";
 import { FiLock } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
-
+import Logout from "../../function/logout";
 const DASHBOARD_SIDEBAR_LINKS = [
   {
     key: 1,
@@ -69,16 +69,20 @@ export default function Sidebar() {
         ))}
       </div>
       <div className="flex flex-col pt-4 border-t border-neutral-200">
+
         <div
+          to="#"
+          onClick={Logout}
           className={classNames(
             "flex items-center gap-2 font-medium px-3 py-2 cursor-pointer text-red-500"
           )}
         >
           <span className="text-xl">
             <HiOutlineLogout />
-          </span>
+          </span >
           Đăng xuất
         </div>
+
       </div>
     </div>
   );
