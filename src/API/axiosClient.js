@@ -3,7 +3,7 @@ import axios from 'axios';
 import authStore from './authStore';
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:7236/api", // Chuyển từ https://localhost sang http://localhost
+  baseURL: "https://localhost:7236/api", 
   headers: {
     "Content-Type": "application/json",
   },
