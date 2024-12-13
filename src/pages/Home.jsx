@@ -18,8 +18,6 @@ import authStore from "../API/authStore";
 
 
 const Home = () => {
-  const token = authStore.getToken();
-  console.log(token);
   return (
     <Helmet title="Home">
       {/* ============= hero section =========== */}

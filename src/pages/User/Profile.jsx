@@ -56,7 +56,7 @@ function ProfileInfoCard({ profile, user }) {
       <div className="flex items-center mt-4">
         <div className="">
           {/* Conditionally rendering user.name with a fallback */}
-          <h3 className="text-xl font-semibold">{user?.name || 'No Name'}</h3>
+          <h1 className="text-xxl font-bold">{user?.name || 'No Name'}</h1>
         </div>
         <div className="ml-auto flex items-center">
           <div className="text-center">
@@ -72,7 +72,7 @@ function ProfileInfoCard({ profile, user }) {
         </div>
         <div className="flex justify-between">
           <span>Phone</span>
-          <span>{user.phone}</span>
+          <span>{user.phoneNumber}</span>
         </div>
         <div className="flex justify-between">
           <span>Website</span>

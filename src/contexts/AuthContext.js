@@ -1,15 +1,15 @@
+// AuthContext.js
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// Create the AuthContext
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [profile, setProfile] = useState(null); // Thêm profile state
   const navigate = useNavigate();
 
-  // Save token and user info in localStorage (so that it persists on refresh)
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem("user"));
     const savedToken = localStorage.getItem("token");
@@ -17,28 +17,28 @@ export const AuthProvider = ({ children }) => {
     if (savedUser && savedToken) {
       setUser(savedUser);
       setToken(savedToken);
+      setProfile(savedUser); // Giả sử savedUser có đầy đủ profile
     }
   }, []);
 
-  const login = async (phone, password) => {
+  const login = async (email, password) => {
     try {
       const response = await fetch(
-        "http://localhost:5000/users?phone=" + phone + "&password=" + password
+        "http://localhost:3000/users?email=" + email + "&password=" + password
       );
       const data = await response.json();
 
       if (data.length > 0) {
-        // Save token and user details
         setUser(data[0]);
         setToken(data[0].accessToken);
+        setProfile(data[0]);
 
-        // Save to localStorage
         localStorage.setItem("user", JSON.stringify(data[0]));
         localStorage.setItem("token", data[0].accessToken);
 
         navigate("/");
       } else {
-        alert("Login failed: Invalid phone number or password");
+        alert("Login failed: Invalid email or password");
       }
     } catch (error) {
       console.error("Error logging in:", error);
@@ -46,19 +46,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (userData) => {
-    // Mock registration - typically, you would post userData to an API
-    console.log("User registered:", userData);
-    alert("Registration successful!");
-    navigate("/login");
-  };
-
   const logout = () => {
-    // Clear user and token data
     setUser(null);
     setToken(null);
+    setProfile(null);
 
-    // Remove from localStorage
     localStorage.removeItem("user");
     localStorage.removeItem("token");
 
@@ -66,7 +58,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, register, logout }}>
+    <AuthContext.Provider value={{ user, token, profile, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
