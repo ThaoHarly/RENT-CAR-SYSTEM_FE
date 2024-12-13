@@ -8,24 +8,42 @@ import axiosClient from "../API/axiosClient";
 
 const fetchVehicleDetails = async (vehicleId) => {
   try {
-    const response = await axiosClient.get(`system/vehicles/${vehicleId}`);
-    return response.vehicle; // Trả về đối tượng vehicle từ API
+    const response = await axiosClient.get(
+      `/Vehicle/GetVehicleById/${vehicleId}`
+    );
+    return response;
   } catch (error) {
     console.error("Error fetching vehicle details:", error);
     throw error;
   }
 };
 
+const fetchReviews = async (vehicleId) => {
+  try {
+    const response = await axiosClient.get(`/Review?pageNumber=1&pageSize=10`);
+    const reviews = response.filter((review) => review.vehicleId === vehicleId);
+    return reviews;
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    throw error;
+  }
+};
+
 const CarDetails = () => {
   const { slug } = useParams(); // `slug` là VehicleID
-  const [singleCarItem, setSingleCarItem] = useState(null);
+  const [vehicleDetails, setVehicleDetails] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const vehicle = await fetchVehicleDetails(slug); // Gọi API với slug
-        setSingleCarItem(vehicle);
+        const data = await fetchVehicleDetails(slug); // Gọi API Vehicle
+        setVehicleDetails(data);
+
+        const reviewsData = await fetchReviews(slug); // Gọi API Reviews
+        setReviews(reviewsData);
+
         setLoading(false);
       } catch (error) {
         console.error("Error fetching car details:", error);
@@ -40,23 +58,24 @@ const CarDetails = () => {
     return <p>Loading...</p>;
   }
 
-  if (!singleCarItem) {
+  if (!vehicleDetails) {
     return <p>Vehicle not found!</p>;
   }
 
-  const {
-    details,
-    Category,
-    LicensePlate,
-    Status,
-    PricePerDay,
-    EngineCapacity,
-    reviews,
-  } = singleCarItem;
+  const { vehicle, car, moto } = vehicleDetails;
 
-  const imgUrl = details?.CarImage || "default-image.jpg";
-  const category = Category === "CAR" ? "Car" : "Motorbike";
-  const brand = details?.CarBrand || "Generic";
+  const imgUrl =
+    car?.carImage ||
+    moto?.motorImage ||
+    "https://via.placeholder.com/800x600.png?text=No+Image";
+
+  const brand = car?.carBrand || "Motorbike";
+  const category = vehicle.category;
+  const pricePerDay = vehicle.pricePerDay;
+  const licensePlate = vehicle.licensePlate;
+  const status = vehicle.status;
+  const engineCapacity = vehicle.engineCapacity;
+  const fuelType = car?.fuelType || "N/A";
 
   return (
     <Helmet title={`${brand} - ${category}`}>
@@ -74,10 +93,10 @@ const CarDetails = () => {
 
                 <div className="d-flex align-items-center gap-5 mb-4 mt-3">
                   <h6 className="rent__price fw-bold fs-4">
-                    ${PricePerDay}.00 / Day
+                    ${pricePerDay}.00 / Day
                   </h6>
                   <span className="d-flex align-items-center gap-2">
-                    License Plate: {LicensePlate}
+                    License Plate: {licensePlate}
                   </span>
                 </div>
 
@@ -86,18 +105,27 @@ const CarDetails = () => {
                   style={{ columnGap: "4rem" }}
                 >
                   <span className="d-flex align-items-center gap-1 section__description">
-                    <i className="ri-settings-2-line" style={{ color: "#f9a826" }}></i>{" "}
-                    {Status}
+                    <i
+                      className="ri-settings-2-line"
+                      style={{ color: "#f9a826" }}
+                    ></i>{" "}
+                    {status}
                   </span>
 
                   <span className="d-flex align-items-center gap-1 section__description">
-                    <i className="ri-fuel-line" style={{ color: "#f9a826" }}></i>{" "}
-                    Fuel: {details?.Fuel_type || "N/A"}
+                    <i
+                      className="ri-fuel-line"
+                      style={{ color: "#f9a826" }}
+                    ></i>{" "}
+                    Fuel: {fuelType}
                   </span>
 
                   <span className="d-flex align-items-center gap-1 section__description">
-                    <i className="ri-roadster-line" style={{ color: "#f9a826" }}></i>{" "}
-                    Engine: {EngineCapacity}L
+                    <i
+                      className="ri-roadster-line"
+                      style={{ color: "#f9a826" }}
+                    ></i>{" "}
+                    Engine: {engineCapacity}L
                   </span>
                 </div>
               </div>
@@ -107,16 +135,21 @@ const CarDetails = () => {
             <Col lg="12" className="mt-5">
               <div className="reviews">
                 <h5 className="mb-4 fw-bold">Customer Reviews</h5>
-                {reviews?.length > 0 ? (
+                {reviews.length > 0 ? (
                   reviews.map((review) => (
                     <div
-                      key={review.ReviewID}
+                      key={review.reviewId}
                       className="bg-light p-3 mb-3 rounded shadow-sm"
                     >
-                      <h6 className="fw-bold mb-2">Rating: {review.Rating}/5</h6>
-                      <p className="text-muted mb-1">"{review.Comment}"</p>
+                      <h6 className="fw-bold mb-2">
+                        Rating: {review.rating}/5
+                      </h6>
+                      <p className="text-muted mb-1">"{review.comment}"</p>
                       <p className="text-secondary">
-                        <small>Reviewed on: {new Date(review.ReviewDate).toLocaleDateString()}</small>
+                        <small>
+                          Reviewed on:{" "}
+                          {new Date(review.reviewDate).toLocaleDateString()}
+                        </small>
                       </p>
                     </div>
                   ))

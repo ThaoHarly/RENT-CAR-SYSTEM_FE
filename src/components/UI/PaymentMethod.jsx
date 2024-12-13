@@ -4,7 +4,7 @@ import masterCard from "../../assets/all-images/master-card.jpg";
 import paypal from "../../assets/all-images/paypal.jpg";
 import "../../styles/payment-method.css";
 
-const PaymentMethod = () => {
+const   PaymentMethod = () => {
   return (
     <>
       <div className="payment">

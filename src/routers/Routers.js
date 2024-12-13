@@ -22,6 +22,8 @@ import Gifts from "../pages/User/Gifts";
 import ChangePassword from "../pages/User/ChangePassword";
 import DeleteAccount from "../pages/User/DeleteAccount";
 import Payment from "../pages/Payment";
+import ForgotPassword from "../pages/User/ForgotPassword";
+import ResetForgotPassword from "../pages/User/ResetForgotPassword";
 
 const Routers = () => {
   return (
@@ -38,6 +40,8 @@ const Routers = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetForgotPassword />} />
       <Route path="*" element={<NotFound />} />
 
       {/* Nested routes inside Layout (user account section) */}

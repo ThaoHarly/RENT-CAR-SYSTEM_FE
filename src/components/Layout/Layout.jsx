@@ -8,7 +8,7 @@ const Layout = () => {
   const location = useLocation();
 
   // List of paths where you don't want to show the Header and Footer
-  const noLayoutPaths = ["/login", "/register"];
+  const noLayoutPaths = ["/login", "/register", "/forgot-password", "/reset-password"];
 
   // Check if the current path is one of the excluded paths
   const isLayoutExcluded = noLayoutPaths.includes(location.pathname);

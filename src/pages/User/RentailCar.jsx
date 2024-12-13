@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-// Fake API for long-term rentals
 const fakeLongTermTripsApi = [];
 
 export default function RentailCar() {
@@ -8,9 +7,8 @@ export default function RentailCar() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate fetching trips from a fake API
     setTimeout(() => {
-      setLongTermTrips(fakeLongTermTripsApi); // Currently no trips
+      setLongTermTrips(fakeLongTermTripsApi); 
       setLoading(false);
     }, 1000);
   }, []);
@@ -22,7 +20,6 @@ export default function RentailCar() {
       <div className="max-w-4xl mx-auto">
         <h2 className="text-2xl font-bold mb-4">Chuyến thuê xe dài hạn</h2>
 
-        {/* Conditional Rendering: Either show trips or show empty state */}
         {longTermTrips.length > 0 ? (
           <div className="grid grid-cols-1 gap-4">
             {longTermTrips.map((trip) => (

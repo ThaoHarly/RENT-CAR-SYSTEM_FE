@@ -6,62 +6,80 @@
     align-items: center;
     height: 100vh;
     width: 100vw;
+    background-color: #f4f7fa;
 }
 
 .login-box {
     background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     width: 100%;
     max-width: 400px;
     text-align: center;
     position: relative;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease-in-out;
+    transform-origin: center;
 }
 
 .login-box:hover {
-    transform: translateY(-5px); /* Subtle lift effect on hover */
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2); /* Subtle lift effect */
 }
 
 .close-btn {
     position: absolute;
     top: 10px;
     right: 15px;
-    font-size: 20px;
+    font-size: 24px;
+    color: #aaa;
     cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: #f44336;
 }
 
 h2 {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     color: #333;
-    font-size: 24px;
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 1px;
 }
 
 .input-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     position: relative;
+    transition: all 0.3s ease;
 }
 
+.password-wrapper {
+    padding-top: 30px;
+    /* padding-right: 40px; */
+}
 .input-group label {
     display: block;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     color: #333;
 }
 
 .input-group input {
     width: 100%;
-    padding: 10px;
-    font-size: 14px;
+    padding: 14px 12px;
+    font-size: 16px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: border 0.3s ease;
+    border-radius: 10px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
 .input-group input:focus {
     outline: none;
     border-color: #4facfe;
+    box-shadow: 0 0 10px rgba(79, 172, 254, 0.3); /* Subtle glow effect */
 }
 
 .eye-icon {
@@ -74,37 +92,45 @@ h2 {
 
 .forgot-password {
     text-align: right;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .forgot-password a {
     color: #4facfe;
     text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+    color: #003366;
 }
 
 /* Login button with smooth animation */
 .login-btn {
     width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: 600;
     border: none;
     background: #003366;
     color: white;
-    border-radius: 5px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.1s ease-in-out;
-    margin-top: 10px;
-    will-change: transform; /* Optimizes animation */
+    transition: background 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.2s ease;
+    margin-top: 20px;
+    box-sizing: border-box;
 }
 
 .login-btn:hover {
     background: #002244;
-    transform: scale(1.02); /* Slight scaling effect on hover */
+    transform: scale(1.05); /* Slight scaling effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Subtle shadow effect */
 }
 
 .login-btn:focus {
     background: #001122;
+    box-shadow: 0 0 8px rgba(79, 172, 254, 0.3); /* Focus glow effect */
 }
 
 .login-btn:active {
@@ -115,19 +141,18 @@ h2 {
 .social-login {
     display: flex;
     justify-content: space-between;
-    margin-top: 15px;
+    margin-top: 25px;
 }
 
 .facebook-btn, .google-btn {
     width: 48%;
-    padding: 12px;
+    padding: 14px;
     font-size: 16px;
     font-weight: bold;
     border: none;
-    border-radius: 5px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.1s ease-in-out;
-    will-change: transform;
+    transition: background 0.3s ease, transform 0.2s ease-in-out;
 }
 
 .facebook-btn {
@@ -142,7 +167,7 @@ h2 {
 }
 
 .facebook-btn:hover, .google-btn:hover {
-    transform: scale(1.02); /* Smooth scaling on hover */
+    transform: scale(1.05); /* Smooth scaling on hover */
 }
 
 .facebook-btn:active, .google-btn:active {
@@ -153,13 +178,15 @@ h2 {
     box-shadow: 0 0 0 2px rgba(72, 133, 244, 0.3); /* Light focus ring effect */
 }
 
+/* Sign-up link */
 .sign-up {
-    margin-top: 15px;
+    margin-top: 25px;
 }
 
 .sign-up a {
     color: #4facfe;
     text-decoration: none;
+    font-weight: 600;
 }
 
 .sign-up a:hover {

@@ -3,7 +3,7 @@ import axios from 'axios';
 import authStore from './authStore';
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:7236/api", // Chuyển từ https://localhost sang http://localhost
+  baseURL: "http://localhost:5219/api", // Chuyển từ https://localhost sang http://localhost
   headers: {
     "Content-Type": "application/json",
   },
@@ -13,7 +13,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   (config) => {
     const token = authStore.getToken();
-    console.log("Token being sent in headers:", token); // Log để kiểm tra token
+    // console.log("Token being sent in headers:", token); // Log để kiểm tra token
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

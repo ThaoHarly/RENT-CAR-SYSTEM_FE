@@ -7,8 +7,24 @@ import axiosClient from "../API/axiosClient";
 
 const fetchVehicles = async () => {
   try {
-    const response = await axiosClient.get(`/system/vehicles/`);
-    return response.vehicles; // Trả về danh sách vehicles
+    const response = await axiosClient.get(`/Vehicle/GetAllVehicle?pageNumber=1&pageSize=10`);
+    const vehiclesData = response;
+
+    if (vehiclesData && vehiclesData.data) {
+      return vehiclesData.data.map((item) => ({
+        VehicleID: item.vehicle.vehicleId,
+        PricePerDay: item.vehicle.pricePerDay,
+        Category: item.vehicle.category,
+        details: {
+          CarImage: item.car?.carImage,
+          MotorImage: item.moto?.motorImage,
+          CarBrand: item.car?.carBrand || "Motorbike",
+        },
+      }));
+    } else {
+      console.error("Invalid API response:", response);
+      return [];
+    }
   } catch (error) {
     console.error("Error fetching vehicles:", error);
     throw error;
@@ -23,7 +39,7 @@ const CarListing = () => {
     const loadVehicles = async () => {
       try {
         const vehicles = await fetchVehicles();
-        setCarData(vehicles); // Dữ liệu từ API
+        setCarData(vehicles); // Cập nhật state với dữ liệu từ API
       } catch (err) {
         console.error(err);
       }
@@ -68,7 +84,7 @@ const CarListing = () => {
               </div>
             </Col>
 
-            {carData.length > 0 ? (
+            {carData && carData.length > 0 ? (
               carData.map((item) => <CarItem item={item} key={item.VehicleID} />)
             ) : (
               <p>Loading cars...</p>

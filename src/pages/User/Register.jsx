@@ -1,24 +1,43 @@
 import React, { useContext, useState } from "react";
 import "../../styles/register.css";
-import AuthContext from "../../contexts/AuthContext";
+import authService from "../../API/authService";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [licenseId, setLicenseId] = useState("");
+  const [licenseClass, setLicenseClass] = useState("");
+  const [expire, setExpire] = useState("");
+  const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
-  const { register } = useContext(AuthContext); // Access the register function from AuthContext
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("Mật khẩu không khớp!"); // Simple password confirmation check
+      alert("Passwords do not match!");
       return;
     }
     setLoading(true);
+
+    const userData = {
+      phoneNumber,
+      password,
+      email,
+      name,
+      nationality,
+      roles: "customer", // Assuming role is always 'customer'
+      licenseId,
+      class: licenseClass,
+      expire,
+      image,
+    };
+
     try {
-      await register(name, phone, password); // Call register function with user data
+      await authService.register(userData);
     } catch (error) {
       console.error(error);
     } finally {
@@ -26,77 +45,115 @@ const Register = () => {
     }
   };
 
-  const handleGoogleRegister = () => {
-    alert("Google registration is not implemented yet.");
-  };
-
-  const handleFacebookRegister = () => {
-    alert("Facebook registration is not implemented yet.");
-  };
-
   return (
     <div className="register-container">
       <div className="register-box">
         <div className="close-btn" onClick={() => window.history.back()}>×</div>
-        <h2>Đăng ký</h2>
+        <h2>Register</h2>
         <form onSubmit={handleSubmit}>
           <div className="input-group">
-            <label>Họ và tên:</label>
+            <label>Full Name:</label>
             <input
               type="text"
-              placeholder="Họ và tên"
+              placeholder="Full Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
           <div className="input-group">
-            <label>Số điện thoại:</label>
+            <label>Email:</label>
             <input
-              type="text"
-              placeholder="Số điện thoại"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
           <div className="input-group">
-            <label>Mật khẩu:</label>
+            <label>Phone Number:</label>
+            <input
+              type="text"
+              placeholder="Phone Number"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label>Password:</label>
             <input
               type="password"
-              placeholder="Mật khẩu"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
           <div className="input-group">
-            <label>Xác nhận mật khẩu:</label>
+            <label>Confirm Password:</label>
             <input
               type="password"
-              placeholder="Xác nhận mật khẩu"
+              placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
           </div>
+          <div className="input-group">
+            <label>Nationality:</label>
+            <input
+              type="text"
+              placeholder="Nationality"
+              value={nationality}
+              onChange={(e) => setNationality(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label>License ID:</label>
+            <input
+              type="text"
+              placeholder="License ID"
+              value={licenseId}
+              onChange={(e) => setLicenseId(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label>Class:</label>
+            <input
+              type="text"
+              placeholder="Class"
+              value={licenseClass}
+              onChange={(e) => setLicenseClass(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label>Expire Date:</label>
+            <input
+              type="date"
+              value={expire}
+              onChange={(e) => setExpire(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label>Image File Name:</label>
+            <input
+              type="text"
+              placeholder="Image File Name"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+              required
+            />
+          </div>
           <button type="submit" className="register-btn" disabled={loading}>
-            {loading ? "Đang đăng ký..." : "Đăng ký"}
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
-
-        <div className="sign-in">
-          Bạn đã có tài khoản? <a href="/login">Đăng nhập</a>
-        </div>
-
-        <div className="social-register">
-          <button className="facebook-btn" onClick={handleFacebookRegister}>
-            <i className="fab fa-facebook"></i> Facebook
-          </button>
-          <button className="google-btn" onClick={handleGoogleRegister}>
-            <i className="fab fa-google"></i> Google
-          </button>
-        </div>
       </div>
     </div>
   );

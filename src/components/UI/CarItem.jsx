@@ -5,10 +5,14 @@ import "../../styles/car-item.css";
 
 const CarItem = (props) => {
   const { details, PricePerDay, VehicleID, Category } = props.item;
+
+  // Ưu tiên CarImage, sau đó MotorImage, và cuối cùng là ảnh mặc định
   const imgUrl =
     details?.CarImage ||
     details?.MotorImage ||
     "https://press.porsche.com/prod/presse_pag/PressResources.nsf/jumppage/modelle-911-911_carrera_gts/$file/2024_992ll_carrera_gts.jpg";
+
+  // Ưu tiên CarBrand hoặc "Motorbike" nếu không có dữ liệu
   const name = details?.CarBrand || "Motorbike";
 
   return (

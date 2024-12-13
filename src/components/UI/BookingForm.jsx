@@ -1,73 +1,137 @@
-import React from "react";
-import "../../styles/booking-form.css";
-import { Form, FormGroup } from "reactstrap";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import axiosClient from "../../API/axiosClient";
+
+const createPaymentUrl = async (paymentData) => {
+  try {
+    const response = await axiosClient.post(
+      `/Payment/CreatePaymentUrlVnpay`,
+      paymentData
+    );
+    return response; // URL thanh toán từ API
+  } catch (error) {
+    console.error(
+      "Error creating payment URL:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
+};
+
+const checkVehicleAvailability = async (vehicleId) => {
+  try {
+    const response = await axiosClient.get(
+      `/Vehicle/GetVehicleById/${vehicleId}`
+    );
+    return response.vehicle.status === "Availability";
+  } catch (error) {
+    console.error("Error checking vehicle availability:", error);
+    return false;
+  }
+};
 
 const BookingForm = () => {
-  const submitHandler = (event) => {
-    event.preventDefault();
+  const { slug } = useParams(); // VehicleID từ URL
+
+  const [formData, setFormData] = useState({
+    orderType: "Test",
+    orderDescription: "Payment for rental",
+    paymentType: "DEPOSIT",
+    vehicleId: slug,
+    startDate: "",
+    endDate: "",
+    paymentMethod: "Online",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Form Data being sent:", formData); // Log dữ liệu gửi đi
+
+    if (new Date(formData.startDate) >= new Date(formData.endDate)) {
+      alert("Start Date must be earlier than End Date.");
+      return;
+    }
+
+    const isAvailable = await checkVehicleAvailability(formData.vehicleId);
+    if (!isAvailable) {
+      alert("This vehicle is not available for the selected dates.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const paymentUrl = await createPaymentUrl(formData);
+      window.location.href = paymentUrl;
+    } catch (error) {
+      console.error(
+        "Error during payment:",
+        error.response?.data || error.message
+      );
+      alert(
+        error.response?.data || "Failed to create payment. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <Form onSubmit={submitHandler}>
-      <FormGroup className="booking__form d-inline-block me-4 mb-4">
-        <input type="text" placeholder="First Name" />
-      </FormGroup>
-      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
-        <input type="text" placeholder="Last Name" />
-      </FormGroup>
-
-      <FormGroup className="booking__form d-inline-block me-4 mb-4">
-        <input type="email" placeholder="Email" />
-      </FormGroup>
-      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
-        <input type="number" placeholder="Phone Number" />
-      </FormGroup>
-
-      <FormGroup className="booking__form d-inline-block me-4 mb-4">
-        <input type="text" placeholder="From Address" />
-      </FormGroup>
-      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
-        <input type="text" placeholder="To Address" />
-      </FormGroup>
-
-      <FormGroup className="booking__form d-inline-block me-4 mb-4">
-        <select name="" id="">
-          <option value="1 person">1 Person</option>
-          <option value="2 person">2 Person</option>
-          <option value="3 person">3 Person</option>
-          <option value="4 person">4 Person</option>
-          <option value="5+ person">5+ Person</option>
-        </select>
-      </FormGroup>
-      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
-        <select name="" id="">
-          <option value="1 luggage">1 luggage</option>
-          <option value="2 luggage">2 luggage</option>
-          <option value="3 luggage">3 luggage</option>
-          <option value="4 luggage">4 luggage</option>
-          <option value="5+ luggage">5+ luggage</option>
-        </select>
-      </FormGroup>
-
-      <FormGroup className="booking__form d-inline-block me-4 mb-4">
-        <input type="date" placeholder="Journey Date" />
-      </FormGroup>
-      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
+    <form onSubmit={handleSubmit}>
+      <div className="form-group mb-3">
+        <label htmlFor="orderDescription">Order Description</label>
         <input
-          type="time"
-          placeholder="Journey Time"
-          className="time__picker"
+          type="text"
+          id="orderDescription"
+          name="orderDescription"
+          className="form-control"
+          value={formData.orderDescription}
+          onChange={handleInputChange}
+          required
         />
-      </FormGroup>
+      </div>
 
-      <FormGroup>
-        <textarea
-          rows={5}
-          type="textarea"
-          className="textarea"
-          placeholder="Write"
-        ></textarea>
-      </FormGroup>
-    </Form>
+      <div className="form-group mb-3">
+        <label htmlFor="startDate">Start Date</label>
+        <input
+          type="date"
+          id="startDate"
+          name="startDate"
+          className="form-control"
+          value={formData.startDate}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
+
+      <div className="form-group mb-3">
+        <label htmlFor="endDate">End Date</label>
+        <input
+          type="date"
+          id="endDate"
+          name="endDate"
+          className="form-control"
+          value={formData.endDate}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
+
+      <button
+        type="submit"
+        className="btn btn-primary w-100"
+        disabled={loading}
+      >
+        {loading ? "Processing..." : "Pay Now"}
+      </button>
+    </form>
   );
 };
 

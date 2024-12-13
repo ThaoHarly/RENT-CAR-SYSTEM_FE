@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
-
+import React, { useRef, useState, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "../../styles/header.css";
+import authStore from "../../API/authStore";
 
 const navLinks = [
   {
@@ -17,7 +17,6 @@ const navLinks = [
     path: "/cars",
     display: "Cars",
   },
-
   {
     path: "/blogs",
     display: "Blog",
@@ -30,8 +29,22 @@ const navLinks = [
 
 const Header = () => {
   const menuRef = useRef(null);
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState(authStore.getUser()); // Lấy thông tin người dùng từ authStore
+
+  useEffect(() => {
+    const storedUser = authStore.getUser();
+    setUser(storedUser); // Cập nhật người dùng khi component render
+  }, []);
 
   const toggleMenu = () => menuRef.current.classList.toggle("menu__active");
+
+  const handleLogout = () => {
+    authStore.clearAuthData(); // Xóa dữ liệu xác thực
+    setUser(null); // Reset người dùng về null
+    navigate("/login"); // Chuyển hướng về trang login
+  };
 
   return (
     <header className="header">
@@ -43,27 +56,39 @@ const Header = () => {
               <div className="header__top__left">
                 <span>Need Help?</span>
                 <span className="header__top__help">
-                  <i class="ri-phone-fill"></i> 0708121335
+                  <i className="ri-phone-fill"></i> 0708121335
                 </span>
               </div>
             </Col>
 
             <Col lg="6" md="6" sm="6">
               <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
-                <Link to="/login" className=" d-flex align-items-center gap-1">
-                  <i class="ri-login-circle-line"></i> Login
-                </Link>
-
-                <Link
-                  to="/register"
-                  className=" d-flex align-items-center gap-1"
-                >
-                  <i class="ri-user-line"></i> Register
-                </Link>
-
-                <Link to="/user" className=" d-flex align-items-center gap-1">
-                  <i class="ri-user-line"></i> Profile
-                </Link>
+                {user ? (
+                  <>
+                    <span className="d-flex align-items-center gap-1">
+                      <i className="ri-user-line"></i> {user.name}
+                    </span>
+                    <span
+                      className="d-flex align-items-center gap-1 logout-link"
+                      onClick={handleLogout}
+                      style={{ cursor: "pointer", color: "red" }}
+                    >
+                      <i className="ri-logout-box-line"></i> Logout
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" className=" d-flex align-items-center gap-1">
+                      <i className="ri-login-circle-line"></i> Login
+                    </Link>
+                    <Link
+                      to="/register"
+                      className=" d-flex align-items-center gap-1"
+                    >
+                      <i className="ri-user-line"></i> Register
+                    </Link>
+                  </>
+                )}
               </div>
             </Col>
           </Row>
@@ -78,7 +103,7 @@ const Header = () => {
               <div className="logo">
                 <h1>
                   <Link to="/home" className=" d-flex align-items-center gap-2">
-                    <i class="ri-car-line"></i>
+                    <i className="ri-car-line"></i>
                     <span>
                       Rent Car <br /> System
                     </span>
@@ -90,7 +115,7 @@ const Header = () => {
             <Col lg="3" md="3" sm="4">
               <div className="header__location d-flex align-items-center gap-2">
                 <span>
-                  <i class="ri-earth-line"></i>
+                  <i className="ri-earth-line"></i>
                 </span>
                 <div className="header__location-content">
                   <h4>VietNam</h4>
@@ -102,7 +127,7 @@ const Header = () => {
             <Col lg="3" md="3" sm="4">
               <div className="header__location d-flex align-items-center gap-2">
                 <span>
-                  <i class="ri-time-line"></i>
+                  <i className="ri-time-line"></i>
                 </span>
                 <div className="header__location-content">
                   <h4>Sunday to Friday</h4>
@@ -119,7 +144,7 @@ const Header = () => {
             >
               <button className="header__btn btn ">
                 <Link to="/contact">
-                  <i class="ri-phone-line"></i> Request a call
+                  <i className="ri-phone-line"></i> Request a call
                 </Link>
               </button>
             </Col>
@@ -128,12 +153,11 @@ const Header = () => {
       </div>
 
       {/* ========== main navigation =========== */}
-
       <div className="main__navbar">
         <Container>
           <div className="navigation__wrapper d-flex align-items-center justify-content-between">
             <span className="mobile__menu">
-              <i class="ri-menu-line" onClick={toggleMenu}></i>
+              <i className="ri-menu-line" onClick={toggleMenu}></i>
             </span>
 
             <div className="navigation" ref={menuRef} onClick={toggleMenu}>
@@ -156,7 +180,7 @@ const Header = () => {
               <div className="search__box">
                 <input type="text" placeholder="Search" />
                 <span>
-                  <i class="ri-search-line"></i>
+                  <i className="ri-search-line"></i>
                 </span>
               </div>
             </div>
