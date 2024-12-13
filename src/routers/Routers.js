@@ -22,6 +22,7 @@ import Gifts from "../pages/User/Gifts";
 import ChangePassword from "../pages/User/ChangePassword";
 import DeleteAccount from "../pages/User/DeleteAccount";
 import Payment from "../pages/Payment";
+import ResidentialManagementInterface from "../pages/ResidentialManagementInterface";
 
 const Routers = () => {
   return (
@@ -41,6 +42,9 @@ const Routers = () => {
       <Route path="*" element={<NotFound />} />
 
       {/* Nested routes inside Layout (user account section) */}
+
+
+      <Route path="/admin" element={<ResidentialManagementInterface />} />
 
       <Route path="/user" element={<Layout />}>
         <Route index path="account" element={<Profile />} />

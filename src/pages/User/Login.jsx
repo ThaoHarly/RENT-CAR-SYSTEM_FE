@@ -31,8 +31,16 @@ const Login = () => {
       
 
       
-      console.log("Login successful:", data); // Log response
-      navigate("/home");
+      console.log("Login successful:",data ); // Log response
+      console.log(typeof data.roleDTO.role.toString().toUpperCase()); // Log response
+
+      if (data.roleDTO.role.toString().toUpperCase() === 'ADMIN') {
+        navigate("/admin");
+      }
+      else 
+      {
+        navigate("/*");
+      }
     } catch (error) {
       console.error("Login error details:", error.response || error);
       setErrorMessage(
