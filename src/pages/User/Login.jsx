@@ -87,14 +87,14 @@ const Login = () => {
                 required
                 className="form-control" // Bootstrap form control styling
               />
-              <button
+              <div
                 className="mx-2"
                 onClick={togglePasswordVisibility}
                 title={showPassword ? "Hide password" : "Show password"}
                 style={{ cursor: "pointer" }}
               >
                 {showPassword ? "🙈" : "👁️"}
-              </button>
+              </div>
             </div>
           </div>
 
