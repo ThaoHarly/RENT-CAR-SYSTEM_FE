@@ -24,7 +24,6 @@ const Payment = () => {
     // Tạo Bill khi component được mount
     const createBill = async () => {
       try {
-        console.log("Sending AgreementID:", agreementId);
 
         const response = await axiosClient.post("/customer/bills", {
           agreementId, // Gửi AgreementID để tạo Bill

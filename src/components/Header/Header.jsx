@@ -38,7 +38,6 @@ const Header = () => {
 
   const toggleMenu = () => menuRef.current.classList.toggle("menu__active");
 
-  console.log(token);
   return (
     <header className="header">
       {/* ============ header top ============ */}
@@ -49,7 +48,7 @@ const Header = () => {
               <div className="header__top__left">
                 <span>Need Help?</span>
                 <span className="header__top__help">
-                  <i class="ri-phone-fill"></i> 0708121335
+                  <i className="ri-phone-fill"></i> 0708121335
                 </span>
               </div>
             </Col>
@@ -66,7 +65,7 @@ const Header = () => {
                         to="/register"
                         className=" d-flex align-items-center gap-1"
                       >
-                        <i class="ri-user-line"></i> Register
+                        <i className="ri-user-line"></i> Register
                       </Link>
                     </>
                   )
@@ -74,7 +73,7 @@ const Header = () => {
                 {token && (
                   <>
                     <Link to="/user" className=" d-flex align-items-center gap-1">
-                      <i class="ri-user-line"></i> Profile
+                      <i className="ri-user-line"></i> Profile
                     </Link>
 
                     <Link
@@ -101,7 +100,7 @@ const Header = () => {
               <div className="logo">
                 <h1>
                   <Link to="/home" className=" d-flex align-items-center gap-2">
-                    <i class="ri-car-line"></i>
+                    <i className="ri-car-line"></i>
                     <span>
                       Rent Car <br /> System
                     </span>
@@ -113,7 +112,7 @@ const Header = () => {
             <Col lg="3" md="3" sm="4">
               <div className="header__location d-flex align-items-center gap-2">
                 <span>
-                  <i class="ri-earth-line"></i>
+                  <i className="ri-earth-line"></i>
                 </span>
                 <div className="header__location-content">
                   <h4>VietNam</h4>
@@ -125,7 +124,7 @@ const Header = () => {
             <Col lg="3" md="3" sm="4">
               <div className="header__location d-flex align-items-center gap-2">
                 <span>
-                  <i class="ri-time-line"></i>
+                  <i className="ri-time-line"></i>
                 </span>
                 <div className="header__location-content">
                   <h4>Sunday to Friday</h4>
@@ -142,7 +141,7 @@ const Header = () => {
             >
               <button className="header__btn btn ">
                 <Link to="/contact">
-                  <i class="ri-phone-line"></i> Request a call
+                  <i className="ri-phone-line"></i> Request a call
                 </Link>
               </button>
             </Col>
@@ -156,7 +155,7 @@ const Header = () => {
         <Container>
           <div className="navigation__wrapper d-flex align-items-center justify-content-between">
             <span className="mobile__menu">
-              <i class="ri-menu-line" onClick={toggleMenu}></i>
+              <i className="ri-menu-line" onClick={toggleMenu}></i>
             </span>
 
             <div className="navigation" ref={menuRef} onClick={toggleMenu}>
@@ -179,7 +178,7 @@ const Header = () => {
               <div className="search__box">
                 <input type="text" placeholder="Search" />
                 <span>
-                  <i class="ri-search-line"></i>
+                  <i className="ri-search-line"></i>
                 </span>
               </div>
             </div>

@@ -25,7 +25,7 @@ import Payment from "../pages/Payment";
 import ResidentialManagementInterface from "../pages/ResidentialManagementInterface";
 // import OwnerLogin from "../../Car-Rental-Web cop/src/pages/User/OwnerLogin";
 import Customer from "../pages/Customer/Customer";
-import HomepageVHS from "../pages/VehicleHireService/homepage";
+import HomepageVHS from "../pages/VehicleHireService/HomepageVHS";
 const Routers = () => {
   return (
     <Routes>

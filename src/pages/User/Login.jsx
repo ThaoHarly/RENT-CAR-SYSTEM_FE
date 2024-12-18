@@ -29,13 +29,12 @@ const Login = () => {
         Password: password,
       });
       
-
-      
-      console.log("Login successful:",data ); // Log response
-      console.log(typeof data.roleDTO.role.toString().toUpperCase()); // Log response
-
       if (data.roleDTO.role.toString().toUpperCase() === 'ADMIN') {
         navigate("/admin");
+      }
+      else if (data.roleDTO.role.toString().toUpperCase() === 'IDV' || data.roleDTO.role.toString().toUpperCase() === 'BSN')
+      {
+        navigate("vhs");
       }
       else 
       {

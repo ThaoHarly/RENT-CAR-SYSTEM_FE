@@ -12,7 +12,6 @@ const ReviewList = () => {
       const response = await axiosClient.get(
         "/Review?pageNumber=1&pageSize=10"
       );
-      console.log("response.data", response); // Debugging the API response
       setReviews(response || []); // Assume response.data is an array
     } catch (err) {
       setError("Failed to load reviews.");

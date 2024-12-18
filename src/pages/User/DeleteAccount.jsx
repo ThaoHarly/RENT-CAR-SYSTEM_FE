@@ -3,12 +3,10 @@ import React from 'react';
 export default function DeleteAccountPage() {
   const handleDeleteAccount = () => {
     // Logic for account deletion request
-    console.log('Account deletion requested');
   };
 
   const handleCancel = () => {
     // Logic for canceling the deletion request
-    console.log('Account deletion canceled');
   };
 
   return (

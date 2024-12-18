@@ -87,9 +87,7 @@ const RentCar = () => {
 
     try {
       const result = await rentCarFetch(formData);
-      console.log("Rental booked successfully:", result);
       const agreementId = result.agreement.AgreementID;
-      console.log("agreementId", agreementId);
       toast.success("Rental booked successfully!");
       navigate(`/payment/${agreementId}`);
     } catch (err) {

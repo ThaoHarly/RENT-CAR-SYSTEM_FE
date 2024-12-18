@@ -24,7 +24,6 @@ export default function ChangePassword() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle password change logic here
-    console.log({ currentPassword, newPassword, confirmPassword });
   };
 
   return (
