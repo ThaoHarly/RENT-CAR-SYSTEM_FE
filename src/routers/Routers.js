@@ -23,10 +23,15 @@ import ChangePassword from "../pages/User/ChangePassword";
 import DeleteAccount from "../pages/User/DeleteAccount";
 import Payment from "../pages/Payment";
 import ResidentialManagementInterface from "../pages/ResidentialManagementInterface";
-
+// import OwnerLogin from "../../Car-Rental-Web cop/src/pages/User/OwnerLogin";
+import Customer from "../pages/Customer/Customer";
+import HomepageVHS from "../pages/VehicleHireService/homepage";
 const Routers = () => {
   return (
     <Routes>
+      <Route path="/test" element={<Customer />} />
+      <Route path="/vhs" element={<HomepageVHS />} />
+
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/home" element={<Home />} />
       <Route path="/about" element={<About />} />
@@ -39,6 +44,7 @@ const Routers = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      {/* <Route path="/ownerLogin" element={<OwnerLogin />} /> */}
       <Route path="*" element={<NotFound />} />
 
       {/* Nested routes inside Layout (user account section) */}
