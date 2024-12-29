@@ -1,0 +1,117 @@
+// Variables
+$primary-color: #003366;
+$hover-color: #002244;
+$background-color: #f4f4f9;
+$input-border-color: #ccc;
+$focus-border-color: #4facfe;
+
+// General styles
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: $background-color;
+
+  .register-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 700px;
+    position: relative;
+    font-family: Arial, sans-serif;
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: $primary-color;
+    }
+
+    .form-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          font-weight: bold;
+          margin-bottom: 5px;
+          color: #333;
+        }
+
+        input {
+          padding: 10px;
+          border: 1px solid $input-border-color;
+          border-radius: 5px;
+          font-size: 14px;
+          transition: border-color 0.3s ease;
+
+          &:focus {
+            outline: none;
+            border-color: $focus-border-color;
+          }
+        }
+      }
+
+      // Full-width input
+      .full-width {
+        grid-column: span 2;
+      }
+
+      // Submit button
+      .register-btn {
+        grid-column: span 2;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        background-color: $primary-color;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.1s ease-in-out;
+
+        &:hover {
+          background-color: $hover-color;
+          transform: scale(1.02);
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+      }
+    }
+  }
+  .link-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    .link {
+      color: #003366;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #002244;
+        text-decoration: underline;
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+/* General container styles */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f9;
+}
+
+.register-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 700px;
+    position: relative;
+    font-family: Arial, sans-serif;
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+}
+
+/* Form layout in grid */
+.form-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Chia form thành 2 cột bằng nhau */
+    gap: 20px; /* Khoảng cách giữa các input */
+    margin-top: 20px;
+}
+
+/* Input group */
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.input-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #4facfe;
+}
+
+/* Full-width input */
+.input-group.full-width {
+    grid-column: span 2; /* Chiếm toàn bộ chiều ngang 2 cột */
+}
+
+/* Submit button */
+.register-btn {
+    grid-column: span 2; /* Nút đăng ký chiếm toàn bộ chiều ngang */
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    background-color: #003366;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s ease-in-out;
+}
+
+.register-btn:hover {
+    background-color: #002244;
+    transform: scale(1.02);
+}
+
+.register-btn:active {
+    transform: scale(0.98);
+}

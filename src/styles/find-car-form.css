@@ -1,0 +1,108 @@
+.form {
+  background: #fff;
+  padding: 20px 15px; /* Reduced padding for compactness */
+  border-radius: 8px; /* Slightly more rounded corners */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+}
+
+.form__group {
+  width: 100%;
+  margin-bottom: 10px; /* Reduced margin for compactness */
+}
+
+.form__group input {
+  border: 1px solid #ccc;
+  padding: 8px 12px; /* Smaller padding for compactness */
+  border-radius: 25px; /* Rounded corners for input field */
+  width: 100%;
+  outline: none;
+  font-size: 0.9rem;
+  box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.form__group input:focus {
+  border: 1px solid #0056b3; /* Highlight color */
+  box-shadow: 0px 0px 5px rgba(0, 86, 179, 0.4); /* Blue glow effect */
+}
+
+.form__group input::placeholder {
+  color: #a0a8b5;
+  font-size: 0.85rem;
+}
+
+.find__car-btn {
+  background: linear-gradient(90deg, #0056b3, #000d6b);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px; /* Rounded button for a sleek look */
+  outline: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.find__car-btn:hover {
+  background: #0073e6; /* Lighter blue */
+  box-shadow: 0px 4px 15px rgba(0, 115, 230, 0.4);
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.find__car-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+
+.find__car-btn:hover::before {
+  width: 250%;
+  height: 250%;
+}
+
+.hero__form {
+  position: relative;
+  margin-top: -50px;
+  z-index: 11;
+}
+
+/* Responsive Adjustments */
+@media only screen and (max-width: 992px) {
+  .form {
+    padding: 15px 10px; /* Adjusted for smaller screens */
+  }
+
+  .form__group input {
+    padding: 7px 10px;
+    font-size: 0.85rem;
+  }
+
+  .find__car-btn {
+    padding: 8px 18px;
+    font-size: 0.85rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .form {
+    padding: 10px 5px;
+  }
+
+  .form__group input {
+    font-size: 0.8rem;
+  }
+
+  .find__car-btn {
+    font-size: 0.8rem;
+  }
+}
