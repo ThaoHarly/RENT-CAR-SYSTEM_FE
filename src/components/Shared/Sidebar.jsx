@@ -48,7 +48,7 @@ export default function Sidebar() {
           <SidebarLink key={link.key} link={link} />
         ))}
       </div>
-      <div className="flex flex-col pt-4 border-t border-neutral-200">
+      {/* <div className="flex flex-col pt-4 border-t border-neutral-200">
         <div
           className={classNames(
             "flex items-center gap-2 font-medium px-3 py-2 cursor-pointer text-red-500"
@@ -57,7 +57,7 @@ export default function Sidebar() {
           <HiOutlineLogout className="text-xl" />
           Logout
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

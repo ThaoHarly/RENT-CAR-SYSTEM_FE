@@ -4,8 +4,9 @@ import axiosClient from "./axiosClient";
 const authService = {
   login: async (credentials) => {
     const response = await axiosClient.post("/Auth/Login", credentials);
-    const { token, user } = response;
-    authStore.setAuthData(token, user);
+    const { token, user, roleDTO } = response;
+    const role = roleDTO?.role; // Lấy role từ response
+    authStore.setAuthData(token, user, role); // Lưu thêm role
     return response;
   },
 
@@ -43,14 +44,15 @@ const authService = {
   changePassword: async ({ curPass, newPass }) => {
     try {
       const response = await axiosClient.put(
-        `/Auth/ChangePassword?curPass=${encodeURIComponent(curPass)}&newPass=${encodeURIComponent(newPass)}`
+        `/Auth/ChangePassword?curPass=${encodeURIComponent(
+          curPass
+        )}&newPass=${encodeURIComponent(newPass)}`
       );
       return response;
     } catch (error) {
       throw error.response ? error.response : new Error("Unexpected error");
     }
-  }   
-  
+  },
 };
 
 export default authService;

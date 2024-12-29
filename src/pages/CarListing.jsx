@@ -10,7 +10,7 @@ import FindCarForm from "../components/UI/FindCarForm";
 const fetchVehicles = async (searchKeyword = "") => {
   try {
     const response = await axiosClient.get(
-      `/Vehicle/GetAllVehicle?pageNumber=1&pageSize=10&searchKeyword=${searchKeyword}`
+      `/Vehicle/GetAllVehicle?pageNumber=1&pageSize=30&searchKeyword=${searchKeyword}`
     );
     const vehiclesData = response;
 

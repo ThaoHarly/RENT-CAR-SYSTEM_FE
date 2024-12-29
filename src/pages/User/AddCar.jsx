@@ -20,6 +20,7 @@ export default function AddCar() {
   });
 
   const [imageFile, setImageFile] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
   const [vehicleId, setVehicleId] = useState("");
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -32,7 +33,16 @@ export default function AddCar() {
 
   // Handle change for image upload
   const handleImageChange = (e) => {
-    setImageFile(e.target.files[0]);
+    const file = e.target.files[0];
+    setImageFile(file);
+
+    // Tạo URL tạm thời để hiển thị preview
+    if (file) {
+      const fileURL = URL.createObjectURL(file);
+      setPreviewImage(fileURL);
+    } else {
+      setPreviewImage(null);
+    }
   };
 
   // Upload Image API
@@ -45,11 +55,6 @@ export default function AddCar() {
     const formData = new FormData();
     formData.append("VehicleId", vehicleId);
     formData.append("ImagePath", imageFile);
-
-    // Log dữ liệu form để kiểm tra
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ": " + pair[1]);
-    }
 
     try {
       await axiosClient.post("/Vehicle/UploadImages", formData, {
@@ -102,6 +107,7 @@ export default function AddCar() {
         chargingTime: 0,
       });
       setImageFile(null);
+      setPreviewImage(null);
     } catch (error) {
       console.error("Error adding car or uploading image:", error);
       toast.error("Add car error!", { position: "top-right" });
@@ -208,6 +214,17 @@ export default function AddCar() {
             className="file-input"
           />
         </div>
+
+        {/* Hiển thị ảnh preview nếu có */}
+        {previewImage && (
+          <div className="image-preview">
+            <img
+              src={previewImage}
+              alt="Preview"
+              style={{ maxWidth: "200px", maxHeight: "150px", marginTop: "10px" }}
+            />
+          </div>
+        )}
 
         <button type="submit" className="submit-btn" disabled={loading}>
           {loading ? "Đang thêm..." : "Add Vehicle"}

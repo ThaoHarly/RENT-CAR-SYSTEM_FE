@@ -18,33 +18,58 @@ const createPaymentUrl = async (paymentData) => {
     throw error;
   }
 };
-
 const checkVehicleAvailability = async (vehicleId) => {
   try {
+    // Sử dụng query parameter thay vì URL path
     const response = await axiosClient.get(
-      `/Vehicle/GetVehicleById/${vehicleId}`
+      `/Vehicle/GetVehicleById`,
+      { params: { vehicleId } } // Truyền vehicleId dưới dạng query parameter
     );
-    return response.vehicle.status === "AVAILABILITY";
+    console.log("Full response from API:", response);
+
+    const vehicle = response?.vehicle; // Đảm bảo đọc từ response.data
+    if (!vehicle) {
+      console.error("Vehicle data not found:", response);
+      toast.error("Vehicle not found. Please check the ID.", {
+        position: "top-right",
+      });
+      return false;
+    }
+
+    console.log("Vehicle status:", vehicle.status);
+    return vehicle.status === "Availability"; // Kiểm tra trạng thái "Availability"
   } catch (error) {
-    console.error("Error checking vehicle AVAILABILITY:", error);
+    console.error("Error checking vehicle availability:", error);
+
+    if (error.response?.status === 404) {
+      toast.error("Vehicle not found. Please verify the ID.", {
+        position: "top-right",
+      });
+    } else {
+      toast.error(
+        error.response?.data || "Error checking vehicle availability.",
+        { position: "top-right" }
+      );
+    }
     return false;
   }
 };
 
+
 const BookingForm = () => {
   const { slug } = useParams(); // VehicleID từ URL
-
   const [formData, setFormData] = useState({
     orderType: "Test",
     orderDescription: "Payment for rental",
     paymentType: "DEPOSIT",
-    vehicleId: slug,
+    vehicleId: slug, // VehicleID từ URL
     startDate: "",
     endDate: "",
     paymentMethod: "Online",
   });
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // Trạng thái khi gửi thanh toán
+  const [checkingAvailability, setCheckingAvailability] = useState(false); // Trạng thái khi kiểm tra tính khả dụng
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,32 +82,33 @@ const BookingForm = () => {
 
     if (new Date(formData.startDate) >= new Date(formData.endDate)) {
       toast.warning("Start Date must be earlier than End Date.", {
-        position: "top-right", 
+        position: "top-right",
       });
       return;
     }
 
+    setCheckingAvailability(true); // Bắt đầu kiểm tra
     const isAvailable = await checkVehicleAvailability(formData.vehicleId);
+    setCheckingAvailability(false); // Kết thúc kiểm tra
+
     if (!isAvailable) {
-      console.log("availabiity", isAvailable)
-      toast.warning("This vehicle is not available for the selected dates.", {
-        position: "top-right", 
-      });
-      return;
+      console.log("Vehicle is not available.");
+      return; // Dừng lại nếu xe không khả dụng
     }
 
     setLoading(true);
 
     try {
       const paymentUrl = await createPaymentUrl(formData);
-      window.location.href = paymentUrl;
+      window.location.href = paymentUrl; // Chuyển hướng đến URL thanh toán
     } catch (error) {
       console.error(
         "Error during payment:",
         error.response?.data || error.message
       );
-      alert(
-        error.response?.data || "Failed to create payment. Please try again."
+      toast.error(
+        error.response?.data || "Failed to create payment. Please try again.",
+        { position: "top-right" }
       );
     } finally {
       setLoading(false);
@@ -133,9 +159,13 @@ const BookingForm = () => {
       <button
         type="submit"
         className="btn btn-primary w-100"
-        disabled={loading}
+        disabled={loading || checkingAvailability}
       >
-        {loading ? "Processing..." : "Pay Now"}
+        {loading
+          ? "Processing..."
+          : checkingAvailability
+          ? "Checking availability..."
+          : "Pay Now"}
       </button>
     </form>
   );

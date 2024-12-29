@@ -1,10 +1,11 @@
+import Swal from "sweetalert2";
 import React, { useState, useEffect } from "react";
 import axiosClient from "../../API/axiosClient";
 
 const fetchVehicles = async () => {
   try {
     const response = await axiosClient.get(
-      `/Vehicle/GetAllVehicle?pageNumber=1&pageSize=10`
+      `/Vehicle/GetAllVehicle?pageNumber=1&pageSize=20`
     );
     const vehiclesData = response;
 
@@ -14,6 +15,7 @@ const fetchVehicles = async () => {
         PricePerDay: item.vehicle.pricePerDay,
         Category: item.vehicle.category,
         status: item.vehicle.status,
+        image: item.vehicle.image,
         details: {
           CarImage: item.car?.carImage,
           MotorImage: item.moto?.motorImage,
@@ -35,6 +37,7 @@ export default function MyCar() {
   const [filteredCars, setFilteredCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState("Tất cả");
+  console.log("cars", cars);
 
   useEffect(() => {
     const loadVehicles = async () => {
@@ -42,7 +45,7 @@ export default function MyCar() {
         setLoading(true);
         const vehicles = await fetchVehicles();
         setCars(vehicles);
-        setFilteredCars(vehicles); // Hiển thị tất cả xe ban đầu
+        setFilteredCars(vehicles);
         setLoading(false);
       } catch (error) {
         console.error("Error loading vehicles:", error);
@@ -63,11 +66,24 @@ export default function MyCar() {
       setFilteredCars(cars.filter((car) => car.status === status));
     }
   };
+
   const handleDelete = async (vehicleId) => {
-    if (window.confirm("Bạn có chắc muốn xóa xe này?")) {
+    const result = await Swal.fire({
+      title: "Bạn có chắc muốn xóa xe này?",
+      text: "Thao tác này không thể hoàn tác!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Xóa",
+      cancelButtonText: "Hủy",
+    });
+
+    if (result.isConfirmed) {
       try {
         await axiosClient.delete(`/Vehicle/DeleteVehicle/${vehicleId}`);
-        alert("Xóa xe thành công!");
+        Swal.fire("Đã xóa!", "Xe đã được xóa thành công.", "success");
+
         // Cập nhật danh sách xe sau khi xóa
         setCars((prevCars) =>
           prevCars.filter((car) => car.VehicleID !== vehicleId)
@@ -77,7 +93,7 @@ export default function MyCar() {
         );
       } catch (error) {
         console.error("Error deleting vehicle:", error);
-        alert("Không thể xóa xe. Vui lòng thử lại!");
+        Swal.fire("Lỗi!", "Không thể xóa xe. Vui lòng thử lại!", "error");
       }
     }
   };
@@ -88,12 +104,9 @@ export default function MyCar() {
   return (
     <div className="p-6 bg-gray-100 min-h-screen flex flex-col justify-center items-center">
       <div className="max-w-4xl w-full">
-        {/* Tiêu đề và hiển thị số dư */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-bold">Danh sách xe của bạn</h2>
         </div>
-
-        {/* Bộ lọc trạng thái */}
         <div className="mb-4">
           <label htmlFor="statusFilter" className="block text-gray-700 mb-2">
             Lọc theo trạng thái:
@@ -110,7 +123,6 @@ export default function MyCar() {
           </select>
         </div>
 
-        {/* Hiển thị danh sách xe */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           {filteredCars.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -120,11 +132,7 @@ export default function MyCar() {
                   className="p-4 bg-gray-100 rounded-lg shadow-sm flex items-start"
                 >
                   <img
-                    src={
-                      car.details.CarImage ||
-                      car.details.MotorImage ||
-                      "https://via.placeholder.com/150"
-                    }
+                    src={car.image || "https://via.placeholder.com/150"}
                     alt="Car"
                     className="w-20 h-20 object-cover rounded-lg mr-4"
                   />
@@ -145,7 +153,6 @@ export default function MyCar() {
                       Trạng thái: {car.status}
                     </p>
                   </div>
-                  {/* Nút Xóa */}
                   <button
                     className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
                     onClick={() => handleDelete(car.VehicleID)}
